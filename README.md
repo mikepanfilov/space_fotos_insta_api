@@ -1,6 +1,7 @@
 # Upload space fotos to Instagram
 
 Script downloads space-thematic photos from SpaceX and Hubble repos to Instagram. All using sites API.
+Script creates Images folder and puts all downloaded there.
 
 ## How to install
 
