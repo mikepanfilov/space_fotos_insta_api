@@ -1,6 +1,7 @@
 import os
 from pprint import pprint
 import requests
+from PIL import Image
 
 def download_image(url, filename):
     response = requests.get(url)
@@ -43,10 +44,26 @@ def fetch_hubble_collection(collection_name):
         print(image['id'])
         fetch_hubble_images(image['id'])
 
+def resize_for_instagram():
+    dir = 'images/insta'
+    if not os.path.exists(dir):
+        os.mkdir(dir)
+    for image_number,image in enumerate(os.listdir('images')):
+        picture = Image.open('images/' + image)
+        width, height = picture.size
+        if width == 1920 and height == 1200:
+            picture.thumbnail((1080, 1080))
+            picture.save(f'images/insta/insta_space_{image_number}.jpg')
+
+
 def main():
     # fetch_spacex_last_lauch()
     # fetch_hubble_images(4673)
-    fetch_hubble_collection('wallpaper')
-    
+    # fetch_hubble_collection('wallpaper')
+    # resize_for_instagram()
+    pass
+
+
+
 if __name__ == '__main__':
     main()
