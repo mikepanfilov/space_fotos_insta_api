@@ -1,5 +1,5 @@
 import os
-import pprint as pp
+from pprint import pprint
 import requests
 
 def download_image(url, filename):
@@ -34,9 +34,19 @@ def fetch_hubble_images(image_id):
         ext = get_file_extention(link_corrected)
         download_image(link_corrected, f'hubble_id{image_id}_{link_number + 1}.' + ext)
 
-def main():
-    fetch_spacex_last_lauch()
-    fetch_hubble_images(4673)
+def fetch_hubble_collection(collection_name):
+    payload = {'collection_name':collection_name}
+    url = 'http://hubblesite.org/api/v3/images'
+    response = requests.get(url, params=payload)
+    image_ids = response.json()
+    for image in image_ids:
+        print(image['id'])
+        fetch_hubble_images(image['id'])
 
+def main():
+    # fetch_spacex_last_lauch()
+    # fetch_hubble_images(4673)
+    fetch_hubble_collection('wallpaper')
+    
 if __name__ == '__main__':
     main()
