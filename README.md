@@ -12,6 +12,33 @@ Then use `pip` (or `pip3`, if there is a conflict with Python2) to install depen
 pip install -r requirements.txt
 ```
 
+Make virtual environment with 'INSTA_USER' and 'INSTA_PASSWORD' for instagram login.
+
+## How to use
+
+To download latest photos from SpaceX photo resources use:
+
+```bash
+python fetch_spacex.py
+```
+
+To download photo-collections from Hubble site photo resources use:
+
+```bash
+python fetch_hubble.py {collection name}
+```
+
+For Instagram uploads use:
+
+```bash
+python instagram_upload.py
+```
+
+*Note:* Iside this script updates images sizes to appropriate 1080x1080 size.
+
+
+Alternatively you can use main.py for all functions at one place.
+
 ## Project Goals
 
 The code is written for educational purposes on online-course for web-developers [dvmn.org](https://dvmn.org/).

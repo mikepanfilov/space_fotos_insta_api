@@ -1,7 +1,8 @@
 import os
-from pprint import pprint
 import requests
 from PIL import Image
+from instabot import Bot
+from dotenv import load_dotenv
 
 def download_image(url, filename):
     response = requests.get(url)
@@ -29,7 +30,6 @@ def fetch_hubble_images(image_id):
     response = requests.get(images_url)
     response.raise_for_status()
     image_links = response.json()['image_files']
-
     for link_number, link in enumerate(image_links):
         link_corrected = 'https:' + link['file_url']
         ext = get_file_extention(link_corrected)
@@ -41,7 +41,6 @@ def fetch_hubble_collection(collection_name):
     response = requests.get(url, params=payload)
     image_ids = response.json()
     for image in image_ids:
-        print(image['id'])
         fetch_hubble_images(image['id'])
 
 def resize_for_instagram():
@@ -53,17 +52,19 @@ def resize_for_instagram():
         width, height = picture.size
         if width == 1920 and height == 1200:
             picture.thumbnail((1080, 1080))
-            picture.save(f'images/insta/insta_space_{image_number}.jpg')
+            picture.save(dir + f'/insta_space_{image_number}.jpg')
 
+def upload_to_instagram():
+    username = os.environ['INSTA_USER']
+    password = os.environ['INSTA_PASSWORD']
+    bot = Bot()
+    bot.login(username=username, password=password)
+    insta_path = 'images/insta/'
+    for picture in os.listdir(insta_path):
+        bot.upload_photo(insta_path + picture)
 
 def main():
-    # fetch_spacex_last_lauch()
-    # fetch_hubble_images(4673)
-    # fetch_hubble_collection('wallpaper')
-    # resize_for_instagram()
-    pass
-
-
+    load_dotenv()
 
 if __name__ == '__main__':
     main()
