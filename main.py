@@ -22,9 +22,6 @@ def fetch_spacex_last_lauch():
     for link_number, link in enumerate(image_links):
         download_image(link, f'spacex{link_number + 1}.jpg')
 
-def get_file_extention(url):
-    return url.split('.')[-1]
-
 def fetch_hubble_images(image_id):
     images_url = f'http://hubblesite.org/api/v3/image/{image_id}'
     response = requests.get(images_url)
@@ -32,8 +29,8 @@ def fetch_hubble_images(image_id):
     image_links = response.json()['image_files']
     for link_number, link in enumerate(image_links):
         link_corrected = 'https:' + link['file_url']
-        ext = get_file_extention(link_corrected)
-        download_image(link_corrected, f'hubble_id{image_id}_{link_number + 1}.' + ext)
+        ext = os.path.splitext(link_corrected)[1]
+        download_image(link_corrected, f'hubble_id{image_id}_{link_number + 1}' + ext)
 
 def fetch_hubble_collection(collection_name):
     payload = {'collection_name':collection_name}

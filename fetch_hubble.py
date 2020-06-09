@@ -12,9 +12,6 @@ def download_image(url, filename):
     with open (filepath, 'wb') as file:
         file.write(response.content)
 
-def get_file_extention(url):
-    return url.split('.')[-1]
-
 def fetch_hubble_images(image_id):
     images_url = f'http://hubblesite.org/api/v3/image/{image_id}'
     response = requests.get(images_url)
@@ -22,8 +19,8 @@ def fetch_hubble_images(image_id):
     image_links = response.json()['image_files']
     for link_number, link in enumerate(image_links):
         link_corrected = 'https:' + link['file_url']
-        ext = get_file_extention(link_corrected)
-        download_image(link_corrected, f'hubble_id{image_id}_{link_number + 1}.' + ext)
+        ext = os.path.splitext(link_corrected)[1]
+        download_image(link_corrected, f'hubble_id{image_id}_{link_number + 1}' + ext)
 
 def main():
     parser = argparse.ArgumentParser(
