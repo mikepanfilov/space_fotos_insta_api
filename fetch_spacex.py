@@ -1,15 +1,4 @@
-import os
-import requests
-from pathlib import Path
-
-def download_image(url, filename):
-    outpath = Path.cwd()
-    response = requests.get(url)
-    response.raise_for_status()
-    os.makedirs(outpath/'images', exist_ok=True)
-    filepath = outpath/'images'/filename
-    with open (filepath, 'wb') as file:
-        file.write(response.content)
+from utils import download_image, fetch_hubble_images, requests
 
 def main():
     images_url = 'https://api.spacexdata.com/v3/launches/latest'

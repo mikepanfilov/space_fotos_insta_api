@@ -36,8 +36,7 @@ python instagram_upload.py
 
 *Note:* Iside this script updates images sizes to appropriate 1080x1080 size.
 
-
-Alternatively you can use main.py for all functions at one place.
+All scripts are refering to utils.py where common functions are placed.
 
 ## Project Goals
 
