@@ -5,9 +5,7 @@ import requests
 def download_image(url, filename):
     response = requests.get(url)
     response.raise_for_status()
-    dir = 'images'
-    if not os.path.exists(dir):
-        os.mkdir(dir)
+    os.makedirs('images', exist_ok=True)
     filepath = os.path.join(dir,filename)
     with open (filepath, 'wb') as file:
         file.write(response.content)

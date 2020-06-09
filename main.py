@@ -7,9 +7,7 @@ from dotenv import load_dotenv
 def download_image(url, filename):
     response = requests.get(url)
     response.raise_for_status()
-    dir = 'images'
-    if not os.path.exists(dir):
-        os.mkdir(dir)
+    os.makedirs('images', exist_ok=True)
     filepath = os.path.join(dir,filename)
     with open (filepath, 'wb') as file:
         file.write(response.content)
@@ -44,9 +42,7 @@ def fetch_hubble_collection(collection_name):
         fetch_hubble_images(image['id'])
 
 def resize_for_instagram():
-    dir = 'images/insta'
-    if not os.path.exists(dir):
-        os.mkdir(dir)
+    os.makedirs('images/insta', exist_ok=True)
     for image_number,image in enumerate(os.listdir('images')):
         picture = Image.open('images/' + image)
         width, height = picture.size
@@ -65,6 +61,6 @@ def upload_to_instagram():
 
 def main():
     load_dotenv()
-
+    
 if __name__ == '__main__':
     main()

@@ -5,9 +5,7 @@ from instabot import Bot
 from dotenv import load_dotenv
 
 def resize_for_instagram():
-    dir = 'images/insta'
-    if not os.path.exists(dir):
-        os.mkdir(dir)
+    os.makedirs('images/insta', exist_ok=True)
     for image_number,image in enumerate(os.listdir('images')):
         picture = Image.open('images/' + image)
         width, height = picture.size
