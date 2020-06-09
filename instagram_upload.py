@@ -3,15 +3,17 @@ import requests
 from PIL import Image
 from instabot import Bot
 from dotenv import load_dotenv
+from pathlib import Path
 
 def resize_for_instagram():
-    os.makedirs('images/insta', exist_ok=True)
-    for image_number,image in enumerate(os.listdir('images')):
-        picture = Image.open('images/' + image)
+    outpath = Path.cwd()
+    os.makedirs(outpath/'images'/'insta', exist_ok=True)
+    for image_number,image in enumerate(os.listdir(outpath/'images')):
+        picture = Image.open(outpath/'images'/image)
         width, height = picture.size
         if width == 1920 and height == 1200:
             picture.thumbnail((1080, 1080))
-            picture.save(dir + f'/insta_space_{image_number}.jpg')
+            picture.save(outpath/'images'/'insta'/f'/insta_space_{image_number}.jpg')
 
 def main():
     load_dotenv()

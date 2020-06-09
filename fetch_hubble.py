@@ -1,12 +1,14 @@
 import os
 import argparse
 import requests
+from pathlib import Path
 
 def download_image(url, filename):
+    outpath = Path.cwd()
     response = requests.get(url)
     response.raise_for_status()
-    os.makedirs('images', exist_ok=True)
-    filepath = os.path.join(dir,filename)
+    os.makedirs(outpath/'images', exist_ok=True)
+    filepath = outpath/'images'/filename
     with open (filepath, 'wb') as file:
         file.write(response.content)
 
