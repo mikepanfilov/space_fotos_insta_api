@@ -1,15 +1,16 @@
 import os
-from pathlib import Path
 import requests
 from PIL import Image
+from pathlib import Path
 from instabot import Bot
 from dotenv import load_dotenv
 
 def download_image(url, filename):
+    outpath = Path.cwd()
     response = requests.get(url)
     response.raise_for_status()
-    os.makedirs('images', exist_ok=True)
-    filepath = os.path.join(dir,filename)
+    os.makedirs(outpath/'images', exist_ok=True)
+    filepath = outpath/'images'/filename
     with open (filepath, 'wb') as file:
         file.write(response.content)
 
@@ -21,8 +22,8 @@ def fetch_spacex_last_lauch():
     for link_number, link in enumerate(image_links):
         download_image(link, f'spacex{link_number + 1}.jpg')
 
-def get_file_extention(address):
-    return address.split('.')[-1]
+def get_file_extention(url):
+    return url.split('.')[-1]
 
 def fetch_hubble_images(image_id):
     images_url = f'http://hubblesite.org/api/v3/image/{image_id}'
@@ -60,10 +61,10 @@ def upload_to_instagram():
     bot.login(username=username, password=password)
     insta_path = outpath/'images'/'insta'
     for picture in os.listdir(insta_path):
-        bot.upload_photo(insta_path + picture)
+        bot.upload_photo(insta_path/picture)
 
 def main():
     load_dotenv()
-    print(Path.cwd() / 'images' / 'insta'/'to.fds')
+
 if __name__ == '__main__':
     main()

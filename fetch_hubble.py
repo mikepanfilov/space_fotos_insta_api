@@ -12,8 +12,8 @@ def download_image(url, filename):
     with open (filepath, 'wb') as file:
         file.write(response.content)
 
-def get_file_extention(address):
-    return address.split('.')[-1]
+def get_file_extention(url):
+    return url.split('.')[-1]
 
 def fetch_hubble_images(image_id):
     images_url = f'http://hubblesite.org/api/v3/image/{image_id}'
